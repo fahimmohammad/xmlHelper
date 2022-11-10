@@ -3,7 +3,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.BufferedWriter;
 public class XmlWriter {
     Stack<String>  elements;
@@ -20,7 +19,6 @@ public class XmlWriter {
         this.sb = new StringBuilder();
     }
     public void writeStartDocument(String encoding){
-
         sb.append("<?xml version=\"1.0\" encoding=\"").append(encoding).append("\" ?>\n");
     }
     public void writeStartDocument(){
@@ -80,7 +78,7 @@ public class XmlWriter {
             sb.append("\t");
             indent--;
         }
-        sb.append("</"+elementName+">\n");
+        sb.append("</").append(elementName).append(">\n");
         currentIndent--;
     }
     public StringBuilder getDocument(){
@@ -92,7 +90,7 @@ public class XmlWriter {
         documentElements.setElements(this.elements);
         return documentElements;
     }
-    public boolean SaveDocument(String location,String fileName) throws IOException {
+    public boolean SaveDocument(String location,String fileName){
         File file;
        try{
            if(location.charAt(location.length()-1) == '\\'){
@@ -112,20 +110,20 @@ public class XmlWriter {
        }
     }
 
-    public static class DocumentElements{
+   static class DocumentElements{
         StringBuilder docString;
         Stack<String>  elements;
-        public DocumentElements(){}
-        public StringBuilder getStringBuilder(){
+        DocumentElements(){}
+        StringBuilder getStringBuilder(){
             return this.docString;
         }
-        public void setStringBuilder(StringBuilder docString){
+        void setStringBuilder(StringBuilder docString){
             this.docString = docString;
         }
-        public Stack<String> getElements(){
+        Stack<String> getElements(){
             return this.elements;
         }
-        public void setElements(Stack<String> elements){
+        void setElements(Stack<String> elements){
             this.elements = elements;
         }
     }
