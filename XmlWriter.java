@@ -41,9 +41,8 @@ public class XmlWriter {
             indent--;
         }
         sb.append("<").append(elementName);
-        Set<String> keySet = attributes.keySet();
-        for(String key:keySet){
-            sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
+        for(Map.Entry attribute: attributes.entrySet()){
+            sb.append(" ").append(attribute.getKey()).append("=\"").append(attribute.getValue()).append("\"");
         }
         sb.append(">\n");
         elements.push(elementName);
@@ -64,9 +63,8 @@ public class XmlWriter {
             indent--;
         }
         sb.append("<").append(elementName);
-        Set<String> keySet = attributes.keySet();
-        for(String key:keySet){
-            sb.append(" ").append(key).append("=\"").append(attributes.get(key)).append("\"");
+        for(Map.Entry attribute: attributes.entrySet()){
+            sb.append(" ").append(attribute.getKey()).append("=\"").append(attribute.getValue()).append("\"");
         }
         sb.append(">").append(data).append("</").append(elementName).append(">\n");
     }
