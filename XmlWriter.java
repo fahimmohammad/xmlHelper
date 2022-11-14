@@ -1,6 +1,5 @@
 import java.io.File;
 import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
@@ -69,15 +68,20 @@ public class XmlWriter {
         sb.append(">").append(data).append("</").append(elementName).append(">\n");
     }
 
-    public void writeEndElement(){
-        int indent  = currentIndent-1;
-        String elementName = elements.pop();
-        while(indent>0){
-            sb.append("\t");
-            indent--;
+    public void writeEndElement() throws XmlwriterException {
+        if(currentIndent == 0){
+            throw new XmlwriterException("No start element found.");
+        }else {
+            int indent  = currentIndent-1;
+            String elementName = elements.pop();
+            while(indent>0){
+                sb.append("\t");
+                indent--;
+            }
+            sb.append("</").append(elementName).append(">\n");
+            currentIndent--;
         }
-        sb.append("</").append(elementName).append(">\n");
-        currentIndent--;
+
     }
     public StringBuilder getDocument(){
         return this.sb;
@@ -107,22 +111,10 @@ public class XmlWriter {
            return false;
        }
     }
-
-   static class DocumentElements{
-        StringBuilder docString;
-        Stack<String>  elements;
-        DocumentElements(){}
-        StringBuilder getStringBuilder(){
-            return this.docString;
-        }
-        void setStringBuilder(StringBuilder docString){
-            this.docString = docString;
-        }
-        Stack<String> getElements(){
-            return this.elements;
-        }
-        void setElements(Stack<String> elements){
-            this.elements = elements;
+     class XmlwriterException extends Exception{
+        XmlwriterException (String str)
+        {
+            super(str);
         }
     }
 }
