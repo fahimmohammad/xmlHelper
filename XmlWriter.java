@@ -9,13 +9,13 @@ public class XmlWriter {
     int currentIndent;
     public XmlWriter(){
         currentIndent = 0;
-        this.elements = new Stack<>();
-        this.sb = new StringBuilder();
+        elements = new Stack<>();
+        sb = new StringBuilder();
     }
     public XmlWriter(Stack<String>  elements){
-        this.elements = elements;
-        currentIndent = this.elements.size();
-        this.sb = new StringBuilder();
+        elements = elements;
+        currentIndent = elements.size();
+        sb = new StringBuilder();
     }
     public void writeStartDocument(String encoding){
         sb.append("<?xml version=\"1.0\" encoding=\"").append(encoding).append("\" ?>\n");
@@ -88,8 +88,8 @@ public class XmlWriter {
     }
     public DocumentElements getDocumentElements(){
         DocumentElements documentElements =  new DocumentElements();
-        documentElements.setStringBuilder(this.sb);
-        documentElements.setElements(this.elements);
+        documentElements.setStringBuilder(sb);
+        documentElements.setElements(elements);
         return documentElements;
     }
     public boolean SaveDocument(String location,String fileName){
@@ -105,6 +105,7 @@ public class XmlWriter {
            bw.write(this.sb.toString());
            bw.close();
            fr.close();
+           sb = new StringBuilder();
            return true;
        }catch (Exception e){
            System.out.println(e.getMessage());
